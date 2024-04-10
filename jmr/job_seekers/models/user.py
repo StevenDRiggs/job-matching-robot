@@ -1,6 +1,7 @@
 from django.db import models
 
 from .skill import Skill
+from .trait import Trait
 
 
 class User(models.Model):
@@ -9,3 +10,4 @@ class User(models.Model):
     sort_by = models.JSONField()
 
     skills = models.ManyToManyField(Skill)
+    traits = models.ManyToManyField(Trait)
