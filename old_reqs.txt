@@ -1,0 +1,7 @@
+asgiref==3.8.1
+Django==5.0.3
+django-debug-toolbar==4.3.0
+mod_wsgi==5.0.0
+psycopg==3.1.18
+sqlparse==0.4.4
+typing_extensions==4.10.0
