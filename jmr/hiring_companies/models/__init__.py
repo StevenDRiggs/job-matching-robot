@@ -1,5 +1,6 @@
 from .career_field import CareerField
 from .career_subfield import CareerSubfield
+from .company import Company
 from .company_field import CompanyField
 from .job_location import JobLocation
 from.job_requirements import JobRequirements

@@ -5,6 +5,8 @@ from .career_field import CareerField
 from .career_subfield import CareerSubfield
 from .company_field import CompanyField
 from .job_location import JobLocation
+from .skill import Skill
+from .trait import Trait
 from .work_task import WorkTask
 
 
@@ -22,6 +24,8 @@ class JobRequirements(models.Model):
     career_fields_available = models.ManyToManyField(CareerField,related_name='jobs_available')
     career_subfields_available = models.ManyToManyField(CareerSubfield, related_name='jobs_available')
 
+    required_skills = models.ManyToManyField(Skill, related_name='jobs_available')
+    required_traits = models.ManyToManyField(Trait, related_name='jobs_available')
     work_tasks = models.ManyToManyField(WorkTask, related_name='jobs_available')
 
     pay_low = models.DecimalField(max_digits=10, decimal_places=2, null=True)
