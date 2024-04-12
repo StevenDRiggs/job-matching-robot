@@ -73,6 +73,11 @@ class WorkTaskModelTests(TestCase):
 
 class PreferencesModelTests(TestCase):
     def test_can_create_preferences_with_minimal_args(self):
+        preferences = Preferences()
+        preferences.save()
+        self.assertEqual(len(Preferences.objects.all()), 1)
+
+    def test_can_create_preferences_with_all_args(self):
         preferred_company_field1 = CompanyField(name='preferred company field 1')
         preferred_company_field1.save()
         preferred_company_field2 = CompanyField(name='preferred company field 2')
@@ -112,6 +117,7 @@ class PreferencesModelTests(TestCase):
             non_preferred_locations = '["everywhere else"]',
             preferred_pay_low=1000.00,
             preferred_pay_high=10000.00,
+            desired_onsite_time=timedelta(days=1),
             days_and_hours_available='[[["SUN", "0900"], ["SUN", "1700"]], [["WED", "1000"], ["WED", "1800"]], [["SAT", "1200"], ["SAT", "1400"]]]',
             start_date_available=datetime.today() + timedelta(days=10),
             start_search_date=datetime.today() + timedelta(days=1),
@@ -193,6 +199,7 @@ class UserModelTests(TestCase):
             non_preferred_locations='["your place", "my place"]',
             preferred_pay_low=15.00,
             preferred_pay_high=1_500_000.25,
+            desired_onsite_time=timedelta(days=7),
             days_and_hours_available='[[["SUN", "2359"], ["MON", "0001"]]]',
             start_search_date=datetime.today() + timedelta(days=365),
             end_search_date=datetime.today() + timedelta(days=367),

@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from django.db import models
 
 from .career_field import CareerField
@@ -29,6 +29,7 @@ class Preferences(models.Model):
     preferred_pay_low = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     preferred_pay_high = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
+    desired_onsite_time = models.DurationField(default=timedelta(days=5))
     def default_days_and_hours_available():
         return '[[["MON", "0900"], ["MON", "1700"]], [["TUE", "0900"], ["TUE", "1700"]], [["WED", "0900"], ["WED", "1700"]], [["THU", "0900"], ["THU", "1700"]], [["FRI", "0900"], ["FRI", "1700"]]]'
     days_and_hours_available = models.JSONField(default=default_days_and_hours_available)

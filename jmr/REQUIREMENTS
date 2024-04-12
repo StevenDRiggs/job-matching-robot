@@ -15,6 +15,7 @@ Job seekers:
  - input (non-)desired job locations, if applicable
  - input desired work type/tasks (detailed)
  - input desired pay range
+ - input desired amount of onsite work
  - input number of hours available
  - input times available
  - input start date available
@@ -25,8 +26,8 @@ Hiring companies:
  - input desired soft skills and levels
  - input desired personality traits and levels
  - input physical location of JOB, not COMPANY
- - input required amount of on-site work
  - input job pay range
+ - input required amount of on-site work
  - input number of hours (or range) required/requested
  - input times required/requested, if applicable
  - input start date requested
