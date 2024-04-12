@@ -20,7 +20,7 @@ class JobRequirements(models.Model):
     distance_measurement = models.CharField(max_length=2, choices={'mi': 'mi', 'km': 'km'}, null=True)
     maximum_relocation_assistance_amount = models.DecimalField(max_digits=10, decimal_places=2,  default=0.00)
 
-    company_field = models.ManyToManyField(CompanyField, related_name='jobs_available')
+    company_fields_available = models.ManyToManyField(CompanyField, related_name='jobs_available')
     career_fields_available = models.ManyToManyField(CareerField,related_name='jobs_available')
     career_subfields_available = models.ManyToManyField(CareerSubfield, related_name='jobs_available')
 

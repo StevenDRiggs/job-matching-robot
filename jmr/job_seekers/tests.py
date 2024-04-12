@@ -11,7 +11,7 @@ from .models import (
     Skill,
     Trait,
     User,
-    WorkTask
+    WorkTask,
 )
 
 
@@ -62,6 +62,25 @@ class CompanyFieldModelTests(TestCase):
         company_field = CompanyField(name='test company field')
         company_field.save()
         self.assertEqual(len(CompanyField.objects.all()), 1)
+
+
+class SkillModelTests(TestCase):
+    def test_can_create_hard_skill(self):
+        hard_skill = Skill(name='hard skill test', hard=True)
+        hard_skill.save()
+        self.assertEqual(len(Skill.objects.all()), 1)
+
+    def test_can_create_soft_skill(self):
+        soft_skill = Skill(name='soft skill test', hard=False)
+        soft_skill.save()
+        self.assertEqual(len(Skill.objects.all()), 1)
+
+
+class TraitModelTests(TestCase):
+    def test_can_create_trait(self):
+        trait = Trait(name='trait test')
+        trait.save()
+        self.assertEqual(len(Trait.objects.all()), 1)
 
 
 class WorkTaskModelTests(TestCase):
@@ -132,25 +151,6 @@ class PreferencesModelTests(TestCase):
         preferences.non_preferred_career_subfields.set([non_preferred_career_subfield1, non_preferred_career_subfield2])
         preferences.preferred_work_tasks.set([preferred_work_task1, preferred_work_task2])
         self.assertEqual(len(Preferences.objects.all()), 1)
-
-
-class SkillModelTests(TestCase):
-    def test_can_create_hard_skill(self):
-        hard_skill = Skill(name='hard skill test', hard=True)
-        hard_skill.save()
-        self.assertEqual(len(Skill.objects.all()), 1)
-
-    def test_can_create_soft_skill(self):
-        soft_skill = Skill(name='soft skill test', hard=False)
-        soft_skill.save()
-        self.assertEqual(len(Skill.objects.all()), 1)
-
-
-class TraitModelTests(TestCase):
-    def test_can_create_trait(self):
-        trait = Trait(name='trait test')
-        trait.save()
-        self.assertEqual(len(Trait.objects.all()), 1)
 
 
 class UserModelTests(TestCase):
