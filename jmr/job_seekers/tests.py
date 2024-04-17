@@ -6,7 +6,7 @@ from .models import (
     Address,
     CareerField,
     CareerSubfield,
-    CompanyField,
+    Industry,
     Preferences,
     Skill,
     SkillLevel,
@@ -59,11 +59,11 @@ class CareerSubfieldModelTests(TestCase):
         self.assertRaises(IntegrityError, career_subfield.save)
 
 
-class CompanyFieldModelTests(TestCase):
-    def test_can_create_company_field(self):
-        company_field = CompanyField(name='test company field')
-        company_field.save()
-        self.assertEqual(len(CompanyField.objects.all()), 1)
+class IndustryModelTests(TestCase):
+    def test_can_create_industry(self):
+        industry = Industry(name='test industry')
+        industry.save()
+        self.assertEqual(len(Industry.objects.all()), 1)
 
 
 class SkillModelTests(TestCase):
@@ -99,14 +99,14 @@ class PreferencesModelTests(TestCase):
         self.assertEqual(len(Preferences.objects.all()), 1)
 
     def test_can_create_preferences_with_all_args(self):
-        preferred_company_field1 = CompanyField(name='preferred company field 1')
-        preferred_company_field1.save()
-        preferred_company_field2 = CompanyField(name='preferred company field 2')
-        preferred_company_field2.save()
-        non_preferred_company_field1 = CompanyField(name='non-preferred company field 1')
-        non_preferred_company_field1.save()
-        non_preferred_company_field2 = CompanyField(name='non-preferred company field 2')
-        non_preferred_company_field2.save()
+        preferred_industry1 = Industry(name='preferred industry 1')
+        preferred_industry1.save()
+        preferred_industry2 = Industry(name='preferred industry 2')
+        preferred_industry2.save()
+        non_preferred_industry1 = Industry(name='non-preferred industry 1')
+        non_preferred_industry1.save()
+        non_preferred_industry2 = Industry(name='non-preferred industry 2')
+        non_preferred_industry2.save()
         preferred_career_field1 = CareerField(name='preferred career field 1')
         preferred_career_field1.save()
         preferred_career_field2 = CareerField(name='preferred career field 2')
@@ -145,8 +145,8 @@ class PreferencesModelTests(TestCase):
             end_search_date=datetime.today() + timedelta(days=5),
         )
         preferences.save()
-        preferences.preferred_company_fields.set([preferred_company_field1, preferred_company_field2])
-        preferences.non_preferred_company_fields.set([non_preferred_company_field1, non_preferred_company_field2])
+        preferences.preferred_industrys.set([preferred_industry1, preferred_industry2])
+        preferences.non_preferred_industrys.set([non_preferred_industry1, non_preferred_industry2])
         preferences.preferred_career_fields.set([preferred_career_field1, preferred_career_field2])
         preferences.non_preferred_career_fields.set([non_preferred_career_field1, non_preferred_career_field2])
         preferences.preferred_career_subfields.set([preferred_career_subfield1, preferred_career_subfield2])
@@ -176,10 +176,10 @@ class UserModelTests(TestCase):
             country='test country',
         )
         address.save()
-        preferred_company_field = CompanyField(name='preferred company field')
-        preferred_company_field.save()
-        non_preferred_company_field = CompanyField(name='non-preferred company field')
-        non_preferred_company_field.save()
+        preferred_industry = Industry(name='preferred industry')
+        preferred_industry.save()
+        non_preferred_industry = Industry(name='non-preferred industry')
+        non_preferred_industry.save()
         preferred_career_field = CareerField(name='preferred career field')
         preferred_career_field.save()
         non_preferred_career_field = CareerField(name='non-preferred career field')
@@ -207,8 +207,8 @@ class UserModelTests(TestCase):
             end_search_date=datetime.today() + timedelta(days=367),
         )
         preferences.save()
-        preferences.preferred_company_fields.set([preferred_company_field])
-        preferences.non_preferred_company_fields.set([non_preferred_company_field])
+        preferences.preferred_industrys.set([preferred_industry])
+        preferences.non_preferred_industrys.set([non_preferred_industry])
         preferences.preferred_career_fields.set([preferred_career_field])
         preferences.non_preferred_career_fields.set([non_preferred_career_field])
         preferences.preferred_career_subfields.set([preferred_career_subfield])

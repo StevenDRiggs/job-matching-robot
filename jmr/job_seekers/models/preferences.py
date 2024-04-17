@@ -3,7 +3,7 @@ from django.db import models
 
 from .career_field import CareerField
 from .career_subfield import CareerSubfield
-from .company_field import CompanyField
+from .industry import Industry
 from .work_task import WorkTask
 
 
@@ -17,8 +17,8 @@ class Preferences(models.Model):
     preferred_locations = models.JSONField(null=True)
     non_preferred_locations = models.JSONField(null=True)
 
-    preferred_company_fields = models.ManyToManyField(CompanyField, related_name='company_preferred_by')
-    non_preferred_company_fields = models.ManyToManyField(CompanyField, related_name='company_non_preferred_by')
+    preferred_industrys = models.ManyToManyField(Industry, related_name='company_preferred_by')
+    non_preferred_industrys = models.ManyToManyField(Industry, related_name='company_non_preferred_by')
     preferred_career_fields = models.ManyToManyField(CareerField, related_name='career_preferred_by')
     non_preferred_career_fields = models.ManyToManyField(CareerField, related_name='career_non_preferred_by')
     preferred_career_subfields = models.ManyToManyField(CareerSubfield, related_name='career_preferred_by')

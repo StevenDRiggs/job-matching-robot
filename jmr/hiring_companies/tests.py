@@ -6,7 +6,7 @@ from .models import (
     CareerField,
     CareerSubfield,
     Company,
-    CompanyField,
+    Industry,
     JobLocation,
     JobRequirements,
     Skill,
@@ -37,11 +37,11 @@ class CareerSubfieldModelTests(TestCase):
         self.assertRaises(IntegrityError, career_subfield.save)
 
 
-class CompanyFieldModelTests(TestCase):
-    def test_can_create_company_field(self):
-        company_field = CompanyField(name='test company field')
-        company_field.save()
-        self.assertEqual(len(CompanyField.objects.all()), 1)
+class IndustryModelTests(TestCase):
+    def test_can_create_industry(self):
+        industry = Industry(name='test industry')
+        industry.save()
+        self.assertEqual(len(Industry.objects.all()), 1)
 
 
 class JobLocationModelTests(TestCase):
@@ -111,10 +111,10 @@ class JobRequirementsModelTests(TestCase):
             country='test country 2',
         )
         job_location2.save()
-        company_field1 = CompanyField(name='company field 1')
-        company_field1.save()
-        company_field2 = CompanyField(name='company field 2')
-        company_field2.save()
+        industry1 = Industry(name='industry 1')
+        industry1.save()
+        industry2 = Industry(name='industry 2')
+        industry2.save()
         career_field1 = CareerField(name='career field 1')
         career_field1.save()
         career_field2 = CareerField(name='career field 2')
@@ -155,7 +155,7 @@ class JobRequirementsModelTests(TestCase):
         )
         job_requirements.save()
         job_requirements.job_locations.set([job_location1, job_location2])
-        job_requirements.company_fields_available.set([company_field1, company_field2])
+        job_requirements.industrys_available.set([industry1, industry2])
         job_requirements.career_fields_available.set([career_field1, career_field2])
         job_requirements.career_subfields_available.set([career_subfield1, career_subfield2, career_subfield3, career_subfield4])
         required_hard_skill_level = SkillLevel(job_requirement=job_requirements, skill=required_hard_skill, level=1, required=True)
@@ -195,10 +195,10 @@ class CompanyModelTests(TestCase):
             country='test country 2',
         )
         job_location2.save()
-        company_field1 = CompanyField(name='company field 1')
-        company_field1.save()
-        company_field2 = CompanyField(name='company field 2')
-        company_field2.save()
+        industry1 = Industry(name='industry 1')
+        industry1.save()
+        industry2 = Industry(name='industry 2')
+        industry2.save()
         career_field1 = CareerField(name='career field 1')
         career_field1.save()
         career_field2 = CareerField(name='career field 2')
@@ -239,7 +239,7 @@ class CompanyModelTests(TestCase):
         )
         job_requirements.save()
         job_requirements.job_locations.set([job_location1, job_location2])
-        job_requirements.company_fields_available.set([company_field1, company_field2])
+        job_requirements.industrys_available.set([industry1, industry2])
         job_requirements.career_fields_available.set([career_field1, career_field2])
         job_requirements.career_subfields_available.set([career_subfield1, career_subfield2, career_subfield3, career_subfield4])
         required_hard_skill_level = SkillLevel(job_requirement=job_requirements, skill=required_hard_skill, level=1, required=True)

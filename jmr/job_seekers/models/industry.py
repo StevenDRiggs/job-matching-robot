@@ -1,5 +1,5 @@
 from django.db import models
 
 
-class CompanyField(models.Model):
+class Industry(models.Model):
     name = models.CharField()
