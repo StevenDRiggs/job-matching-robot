@@ -4,6 +4,8 @@ from .career_subfield import CareerSubfield
 from .company_field import CompanyField
 from .preferences import Preferences
 from .skill import Skill
+from .skill_level import SkillLevel
 from .trait import Trait
+from .trait_level import TraitLevel
 from .user import User
 from .work_task import WorkTask

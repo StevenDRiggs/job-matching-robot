@@ -24,7 +24,7 @@ class JobRequirements(models.Model):
     career_fields_available = models.ManyToManyField(CareerField,related_name='jobs_available')
     career_subfields_available = models.ManyToManyField(CareerSubfield, related_name='jobs_available')
 
-    required_skills = models.ManyToManyField(Skill, related_name='jobs_available')
+    skills = models.ManyToManyField(Skill, related_name='jobs_available', through='SkillLevel')
     required_traits = models.ManyToManyField(Trait, related_name='jobs_available')
     work_tasks = models.ManyToManyField(WorkTask, related_name='jobs_available')
 

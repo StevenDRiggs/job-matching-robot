@@ -9,7 +9,9 @@ from .models import (
     CompanyField,
     Preferences,
     Skill,
+    SkillLevel,
     Trait,
+    TraitLevel,
     User,
     WorkTask,
 )
@@ -224,6 +226,10 @@ class UserModelTests(TestCase):
             preferences=preferences,
         )
         user.save()
+        skill_level = SkillLevel(skill=skill, user=user, level=1)
+        skill_level.save()
         user.skills.set([skill])
+        trait_level = TraitLevel(trait=trait, user=user, level=1)
+        trait_level.save()
         user.traits.set([trait])
         self.assertEqual(len(User.objects.all()), 1)
