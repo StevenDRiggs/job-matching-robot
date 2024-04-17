@@ -25,7 +25,7 @@ class JobRequirements(models.Model):
     career_subfields_available = models.ManyToManyField(CareerSubfield, related_name='jobs_available')
 
     skills = models.ManyToManyField(Skill, related_name='jobs_available', through='SkillLevel')
-    required_traits = models.ManyToManyField(Trait, related_name='jobs_available')
+    traits = models.ManyToManyField(Trait, related_name='jobs_available', through='TraitLevel')
     work_tasks = models.ManyToManyField(WorkTask, related_name='jobs_available')
 
     pay_low = models.DecimalField(max_digits=10, decimal_places=2, null=True)

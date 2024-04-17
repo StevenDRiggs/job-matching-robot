@@ -12,6 +12,7 @@ from .models import (
     Skill,
     SkillLevel,
     Trait,
+    TraitLevel,
     WorkTask,
 )
 
@@ -130,10 +131,10 @@ class JobRequirementsModelTests(TestCase):
         required_hard_skill.save()
         preferred_soft_skill = Skill(name='preferred soft skill', hard=False)
         preferred_soft_skill.save()
-        trait1 = Trait(name='trait 1')
-        trait1.save()
-        trait2 = Trait(name='trait 2')
-        trait2.save()
+        required_trait = Trait(name='required trait')
+        required_trait.save()
+        preferred_trait = Trait(name='preferred trait')
+        preferred_trait.save()
         work_task1 = WorkTask(name='work task 1', description='work task 1 description')
         work_task1.save()
         work_task2 = WorkTask(name='work task 2', description='work task 2 description')
@@ -162,7 +163,11 @@ class JobRequirementsModelTests(TestCase):
         preferred_soft_skill_level = SkillLevel(job_requirement=job_requirements, skill=preferred_soft_skill, level=3, required=False)
         preferred_soft_skill_level.save()
         job_requirements.skills.set([required_hard_skill, preferred_soft_skill])
-        job_requirements.required_traits.set([trait1, trait2])
+        required_trait_level = TraitLevel(job_requirement=job_requirements, trait=required_trait, level=1, required=True)
+        required_trait_level.save()
+        preferred_trait_level = TraitLevel(job_requirement=job_requirements, trait=preferred_trait, level=3, required=False)
+        preferred_trait_level.save()
+        job_requirements.traits.set([required_trait, preferred_trait])
         job_requirements.work_tasks.set([work_task1, work_task2])
         self.assertEqual(len(JobRequirements.objects.all()), 1)
 
@@ -210,10 +215,10 @@ class CompanyModelTests(TestCase):
         required_hard_skill.save()
         preferred_soft_skill = Skill(name='preferred soft skill', hard=False)
         preferred_soft_skill.save()
-        trait1 = Trait(name='trait 1')
-        trait1.save()
-        trait2 = Trait(name='trait 2')
-        trait2.save()
+        required_trait = Trait(name='required trait')
+        required_trait.save()
+        preferred_trait = Trait(name='preferred trait')
+        preferred_trait.save()
         work_task1 = WorkTask(name='work task 1', description='work task 1 description')
         work_task1.save()
         work_task2 = WorkTask(name='work task 2', description='work task 2 description')
@@ -242,7 +247,11 @@ class CompanyModelTests(TestCase):
         preferred_soft_skill_level = SkillLevel(job_requirement=job_requirements, skill=preferred_soft_skill, level=3, required=False)
         preferred_soft_skill_level.save()
         job_requirements.skills.set([required_hard_skill, preferred_soft_skill])
-        job_requirements.required_traits.set([trait1, trait2])
+        required_trait_level = TraitLevel(job_requirement=job_requirements, trait=required_trait, level=1, required=True)
+        required_trait_level.save()
+        preferred_trait_level = TraitLevel(job_requirement=job_requirements, trait=preferred_trait, level=3, required=False)
+        preferred_trait_level.save()
+        job_requirements.traits.set([required_trait, preferred_trait])
         job_requirements.work_tasks.set([work_task1, work_task2])
         company = Company(company_name_original='test company name', company_name_latinized='test company name latinized', job_requirements=job_requirements)
         company.save()

@@ -7,4 +7,5 @@ from.job_requirements import JobRequirements
 from .skill import Skill
 from .skill_level import SkillLevel
 from .trait import Trait
+from .trait_level import TraitLevel
 from .work_task import WorkTask
