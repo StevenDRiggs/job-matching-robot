@@ -11,3 +11,6 @@ class Company(models.Model):
     company_name_latinized = models.CharField(null=True)
 
     job_requirements = models.OneToOneField(JobRequirements, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'companies'

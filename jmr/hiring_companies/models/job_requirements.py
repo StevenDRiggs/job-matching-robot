@@ -38,3 +38,6 @@ class JobRequirements(models.Model):
 
     position_availability_start_date = models.DateField(default=date.today)
     position_availability_end_date = models.DateField(null=True)
+
+    class Meta:
+        verbose_name_plural = 'job requirements'

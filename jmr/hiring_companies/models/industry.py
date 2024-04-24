@@ -2,4 +2,5 @@ from job_seekers.models import Industry as JSIndustry
 
 
 class Industry(JSIndustry):
-    pass
+    class Meta:
+        verbose_name_plural = 'industries'

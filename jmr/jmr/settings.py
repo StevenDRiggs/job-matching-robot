@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'job_seekers.apps.JobSeekersConfig',
     'hiring_companies.apps.HiringCompaniesConfig',
+    'djmoney',
+    'django_json_widget',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

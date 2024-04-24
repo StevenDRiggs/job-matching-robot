@@ -1,42 +1,42 @@
 Job seekers:
- - input hard skills and levels
- - input soft skills and levels
- - input personality traits and levels
+ ✓ input hard skills and levels
+ ✓ input soft skills and levels
+ ✓ input personality traits and levels
  -* all previous maybe via questionnaires?
- - input physical address (private and not shared - only for distance calculations)
- - input remote work willingness/amount
- - input relocation yes/no
- - input relocation distance/(non-)preferred locations (if yes)
- - input relocation assistance needed?
- - if yes, how much? (maybe)
- - input (non-)desired industries (e.g. medical, finance, tech, ect.)
- - input (non-)desired career fields (e.g. software, maintenance, nursing, etc.)
- - input (non-)desired career sub-fields (e.g. software: devops, tools, website development, etc.)
- - input (non-)desired job locations, if applicable
- - input desired work type/tasks (detailed)
- - input desired pay range
- - input desired amount of onsite work
- - input number of hours available
- - input times available
- - input start date available
- - input search start/stop dates if desired
+ ✓ input physical address (private and not shared - only for distance calculations)
+ ✓ input remote work willingness/amount
+ ✓ input relocation yes/no
+ ✓ input relocation distance/(non-)preferred locations (if yes)
+ ✓ input relocation assistance needed?
+ ✓ if yes, how much? (maybe)
+ ✓ input (non-)desired industries (e.g. medical, finance, tech, ect.)
+ ✓ input (non-)desired career fields (e.g. software, maintenance, nursing, etc.)
+ ✓ input (non-)desired career sub-fields (e.g. software: devops, tools, website development, etc.)
+ ✓ input (non-)desired job locations, if applicable
+ ✓ input desired work type/tasks (detailed)
+ ✓ input desired pay range
+ ✓ input desired amount of onsite work
+ ✓ input number of hours available
+ ✓ input times available
+ ✓ input start date available
+ ✓ input search start/stop dates if desired
 
 Hiring companies:
- - input desired hard skills and levels
- - input desired soft skills and levels
- - input desired personality traits and levels
- - input physical location of JOB, not COMPANY
- - input job pay range
- - input required amount of on-site work
- - input number of hours (or range) required/requested
- - input times required/requested, if applicable
- - input start date requested
- - input required work type/tasks
- - input career field
- - input career sub-field
- - input relocation assistance available?
- - if yes, how much/far?
- - input position availability start/stop dates if necessary
+ ✓ input desired hard skills and levels
+ ✓ input desired soft skills and levels
+ ✓ input desired personality traits and levels
+ ✓ input physical location of JOB, not COMPANY
+ ✓ input job pay range
+ ✓ input required amount of on-site work
+ ✓ input number of hours (or range) required/requested
+ ✓ input times required/requested, if applicable
+ ✓ input start date requested
+ ✓ input required work type/tasks
+ ✓ input career field
+ ✓ input career sub-field
+ ✓ input relocation assistance available?
+ ✓ if yes, how much/far?
+ ✓ input position availability start/stop dates if necessary
 
 App:
  - sort all data into must-haves, should-haves, plusses, minuses?, should-not-haves, and must-not-haves
