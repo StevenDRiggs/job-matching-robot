@@ -4,6 +4,8 @@ from .career_subfield_model_tests import CareerSubfieldModelTests
 from .industry_model_tests import IndustryModelTests
 from .preferences_model_tests import PreferencesModelTests
 from .skill_model_tests import SkillModelTests
+from .skill_level_model_tests import SkillLevelModelTests
 from .trait_model_tests import TraitModelTests
+from .trait_level_model_tests import TraitLevelModelTests
 from .user_model_tests import UserModelTests
 from .work_task_model_tests import WorkTaskModelTests

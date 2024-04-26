@@ -6,7 +6,9 @@ from .model_tests import (
     IndustryModelTests,
     PreferencesModelTests,
     SkillModelTests,
+    SkillLevelModelTests,
     TraitModelTests,
+    TraitLevelModelTests,
     UserModelTests,
     WorkTaskModelTests,
 )

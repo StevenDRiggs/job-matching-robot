@@ -9,10 +9,8 @@ from job_seekers.models import (
 
 class CareerSubfieldModelTests(TestCase):
     def test_can_create_career_subfield_with_career_field(self):
-        career_field = CareerField(name='test career field')
-        career_field.save()
-        career_subfield = CareerSubfield(name='test career subfield', career_field=career_field)
-        career_subfield.save()
+        career_field = CareerField.objects.create(name='test career field')
+        career_subfield = CareerSubfield.objects.create(name='test career subfield', career_field=career_field)
         self.assertEqual(len(CareerSubfield.objects.all()), 1)
 
     def test_cannot_create_career_subfield_without_career_field(self):
