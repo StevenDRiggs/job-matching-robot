@@ -1,1 +1,0 @@
-from .job_posting_user_matching_tests import JobPostingUserMatchingTests

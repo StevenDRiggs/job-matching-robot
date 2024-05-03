@@ -13,3 +13,8 @@ class User(models.Model):
     preferences = models.OneToOneField(Preferences, on_delete=models.CASCADE, null=True, blank=True)
     skills = models.ManyToManyField(Skill, through='SkillLevel')
     traits = models.ManyToManyField(Trait, through='TraitLevel')
+
+
+    @property
+    def name(self):
+        return self.full_name_latinized or self.full_name_original
