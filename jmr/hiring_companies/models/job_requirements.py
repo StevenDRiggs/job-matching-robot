@@ -25,7 +25,8 @@ class JobRequirements(models.Model):
             'FRI': ('0900', '1700'),
         }
     days_and_hours = models.JSONField(default=default_days_and_hours)
-    start_date = models.DateField(default=date.today)
+    start_date_earliest = models.DateField(default=date.today)
+    start_date_latest = models.DateField(default=date.today)
     relocate = models.BooleanField(default=False)
     maximum_relocation_distance = models.SmallIntegerField(default=0, null=True, blank=True)
     distance_measurement = models.CharField(max_length=2, choices={'mi': 'mi', 'km': 'km'}, null=True, blank=True)
