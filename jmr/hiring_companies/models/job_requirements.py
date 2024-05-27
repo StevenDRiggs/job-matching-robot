@@ -27,6 +27,7 @@ class JobRequirements(models.Model):
     days_and_hours = models.JSONField(default=default_days_and_hours)
     start_date_earliest = models.DateField(default=date.today)
     start_date_latest = models.DateField(default=date.today)
+    maximum_commute = models.SmallIntegerField(default=100, null=True, blank=True)
     relocate = models.BooleanField(default=False)
     maximum_relocation_distance = models.SmallIntegerField(default=0, null=True, blank=True)
     distance_measurement = models.CharField(max_length=2, choices={'mi': 'mi', 'km': 'km'}, null=True, blank=True)
