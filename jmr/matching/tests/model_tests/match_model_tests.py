@@ -228,3 +228,13 @@ class MatchModelTests(TestCase):
 
         matches = Match.find_exact(company=company1)
         self.assertEqual(matches, [user1])
+
+    def test_can_match_by_start_date(self):
+        user2 = self.user2
+        company1 = self.company1
+
+        user2.preferences.start_date = date.today() + timedelta(weeks=78)
+        user2.preferences.save()
+
+        matches = Match.find_exact(company=company1)
+        self.assertEqual(matches, [user2])
