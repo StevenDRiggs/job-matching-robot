@@ -18,3 +18,6 @@ class User(models.Model):
     @property
     def name(self):
         return self.full_name_latinized or self.full_name_original
+
+    def __str__(self):
+        return self.name

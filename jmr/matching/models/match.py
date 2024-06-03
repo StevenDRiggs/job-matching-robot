@@ -27,14 +27,20 @@ class Match(models.Model):
                 Q(preferences__start_search_date__lte=date.today()),
                 Q(preferences__end_search_date__isnull=True) | Q(preferences__end_search_date__gte=date.today()),
             )
+
             users_by_remote = users_to_check.filter(preferences__remote=company.job_requirements.remote)
+
             users_by_hybrid = users_to_check.filter(preferences__hybrid=company.job_requirements.hybrid)
+
             users_by_days_and_hours = users_to_check.filter(preferences__days_and_hours=company.job_requirements.days_and_hours)
+
             users_by_start_date = users_to_check.filter(
                 preferences__start_date__gte=company.job_requirements.start_date_earliest,
                 preferences__start_date__lte=company.job_requirements.start_date_latest,
             )
+
             users_by_commute = []
+
             for user in users_to_check:
                 user_gaddrs = [address.gaddr for address in user.addresses.all()]
                 job_location_gaddrs = [job_location.gaddr for job_location in company.job_requirements.job_locations.all()]
@@ -66,7 +72,6 @@ class Match(models.Model):
             users = [*users_by_remote, *users_by_hybrid, *users_by_days_and_hours, *users_by_commute]
 
             for user in set(users):
-                print(user)
                 Match.objects.create(hiring_company=company, job_seeker=user)
-            return list(Match.objects.filter(hiring_company=company))
+            return [match.job_seeker for match in Match.objects.filter(hiring_company=company)]
 

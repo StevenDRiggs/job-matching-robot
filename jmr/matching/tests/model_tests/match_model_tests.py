@@ -19,6 +19,7 @@ class MatchModelTests(TestCase):
         cls.user1 = User.objects.create(
             full_name_original='test user 1',
             sort_by=['1', 'user', 'test'],
+            preferences=Preferences.objects.create(),
         )
         cls.user1.addresses.add(
             Address.objects.create(
@@ -36,11 +37,11 @@ class MatchModelTests(TestCase):
                 user=cls.user1,
             ),
         )
-        cls.user1.preferences = Preferences.objects.create()
         cls.user1.save()
         cls.user2 = User.objects.create(
-            full_name_original=['test user 2'],
+            full_name_original='test user 2',
             sort_by=['2', 'user', 'test'],
+            preferences=Preferences.objects.create(),
         )
         cls.user2.addresses.add(
             Address.objects.create(
@@ -51,12 +52,13 @@ class MatchModelTests(TestCase):
                 user=cls.user2,
             ),
         )
-        cls.user2.preferences = Preferences.objects.create()
         cls.user2.save()
         cls.company1 = Company.objects.create(
             company_name_original='test company 1',
         )
-        cls.company1.job_requirements = JobRequirements.objects.create(company=cls.company1)
+        cls.company1.job_requirements = JobRequirements.objects.create(
+            company=cls.company1,
+        )
         cls.company1.job_requirements.job_locations.add(
             JobLocation.objects.create(
                 city='Denver',
@@ -73,9 +75,28 @@ class MatchModelTests(TestCase):
 
     def test_can_match_by_remote(self):
         user1 = self.user1
-        user2 = self.user2
         user1.preferences.remote = True
-        user1.save()
+        user1.preferences.save()
+        user2 = self.user2
+        user2.preferences.hybrid = True
+        user2.preferences.days_and_hours = ''
+        user2.preferences.save()
         company1 = self.company1
+        company1.job_requirements.remote = True
+        company1.job_requirements.save()
+        matches = Match.find_exact(company=company1)
+        self.assertEqual(matches, [user1])
+
+    def test_can_match_by_hybrid(self):
+        user1 = self.user1
+        user1.preferences.hybrid = True
+        user1.preferences.save()
+        user2 = self.user2
+        user2.preferences.remote = True
+        user2.preferences.days_and_hours = ''
+        user2.preferences.save()
+        company1 = self.company1
+        company1.job_requirements.hybrid = True
+        company1.job_requirements.save()
         matches = Match.find_exact(company=company1)
         self.assertEqual(matches, [user1])
