@@ -40,7 +40,6 @@ class Match(models.Model):
             )
 
             users_by_commute = []
-
             for user in users_to_check:
                 user_gaddrs = [address.gaddr for address in user.addresses.all()]
                 job_location_gaddrs = [job_location.gaddr for job_location in company.job_requirements.job_locations.all()]
@@ -48,28 +47,28 @@ class Match(models.Model):
                 distances = [gmaps_distance_matrix['rows'][i]['elements'][j]['distance']['value'] for i in range(len(user_gaddrs)) for j in range(len(job_location_gaddrs))]
                 if not user.preferences.relocate:
                     if company.job_requirements.distance_measurement == 'km':
-                        if any([lambda distance: distance <= company.job_requirements.maximum_commute * 1000 for distance in distances]):
+                        if any([distance <= company.job_requirements.maximum_commute * 1000 for distance in distances]):
                             users_by_commute.append(user)
                     elif company.job_requirements.distance_measurement == 'mi':
-                        if any([lambda distance: distance * 0.000621371 <= company.job_requirements.maximum_commute for distance in distances]):
+                        if any([distance * 0.000621371 <= company.job_requirements.maximum_commute for distance in distances]):
                             users_by_commute.append(user)
                 else:  # user.preferences.relocate == True
                     if company.job_requirements.distance_measurement == 'km' and user.preferences.distance_measurement == 'km':
-                        if any([lambda distance: distance - min(company.job_requirements.maximum_relocation_distance * 1000, user.preferences.maximum_relocation_distance * 1000) <= company.job_requirements.maximum_commute * 1000 for distance in distances]):
+                        if any([distance - min(company.job_requirements.maximum_relocation_distance * 1000, user.preferences.maximum_relocation_distance * 1000) <= company.job_requirements.maximum_commute * 1000 for distance in distances]):
                             users_by_commute.append(user)
                     elif company.job_requirements.distance_measurement == 'km' and user.preferences.distance_measurement == 'mi':
-                        if any([lambda distance: distance - min(company.job_requirements.maximum_relocation_distance * 1000, user.preferences.maximum_relocation_distance * 0.000621371) <= company.job_requirements.maximum_commute for distance in distances]):
+                        if any([distance - min(company.job_requirements.maximum_relocation_distance * 1000, user.preferences.maximum_relocation_distance * 0.000621371) <= company.job_requirements.maximum_commute for distance in distances]):
                             user_by_commute.append(user)
                     elif company.job_requirements.distance_measurement == 'mi' and user.preferences.distance_measurement == 'km':
-                        if any([lambda distance: distance - min(company.job_requirements.maximum_relocation_distance * 0.000621371, user.preferences.maximum_relocation_distance * 1000) <= company.job_requirements.maximum_relocation_distance * 0.000621371 for distance in distances]):
+                        if any([distance - min(company.job_requirements.maximum_relocation_distance * 0.000621371, user.preferences.maximum_relocation_distance * 1000) <= company.job_requirements.maximum_relocation_distance * 0.000621371 for distance in distances]):
                             users_by_commute.append(user)
                     elif company.job_requirements.distance_measurement == 'mi' and user.preferences.distance_measurement == 'mi':
-                        if any([lambda distance: distance - min(company.job_requirements.maximum_relocation_distance * 0.000621371, user.preferences.maximum_relocation_distance * 0.000621371) <= company.job_requirements.maximum_commute * 0.000621371 for distance in distances]):
+                        if any([distance - min(company.job_requirements.maximum_relocation_distance * 0.000621371, user.preferences.maximum_relocation_distance * 0.000621371) <= company.job_requirements.maximum_commute * 0.000621371 for distance in distances]):
                             users_by_commute.append(user)
             # users_by_pay
             # users_by_work_task
 
-            users = [*users_by_remote, *users_by_hybrid, *users_by_days_and_hours, *users_by_commute]
+            users = [*users_by_remote, *users_by_hybrid, *users_by_days_and_hours, *users_by_start_date, *users_by_commute]
 
             for user in set(users):
                 Match.objects.create(hiring_company=company, job_seeker=user)
