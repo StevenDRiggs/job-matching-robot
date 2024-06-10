@@ -231,10 +231,32 @@ class MatchModelTests(TestCase):
 
     def test_can_match_by_start_date(self):
         user2 = self.user2
-        company1 = self.company1
 
         user2.preferences.start_date = date.today() + timedelta(weeks=78)
         user2.preferences.save()
 
-        matches = Match.find_exact(company=company1)
+        matches = Match.find_exact(company=self.company1)
         self.assertEqual(matches, [user2])
+
+    def test_can_match_by_adjusted_commute(self):
+        job_requirements = self.company1.job_requirements
+        job_requirements.maximum_commute = 25
+        job_requirements.save()
+        preferences = self.user1.preferences
+        preferences.distance_measurement = 'km'
+        preferences.save()
+        
+        matches = Match.find_exact(company=self.company1)
+        self.assertEqual(matches, [self.user1])
+
+        Match.objects.all().delete()
+        job_requirements.maximum_commute = 1
+        job_requirements.relocate = True
+        job_requirements.maximum_relocation_distance = 25
+        job_requirements.save()
+        preferences.relocate = True
+        preferences.maximum_relocation_distance = 25
+        preferences.save()
+
+        matches = Match.find_exact(company=self.company1)
+        self.assertEqual(matches, [self.user1])
