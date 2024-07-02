@@ -65,10 +65,13 @@ class Match(models.Model):
                     elif company.job_requirements.distance_measurement == 'mi' and user.preferences.distance_measurement == 'mi':
                         if any([distance - min(company.job_requirements.maximum_relocation_distance * 0.000621371, user.preferences.maximum_relocation_distance * 0.000621371) <= company.job_requirements.maximum_commute * 0.000621371 for distance in distances]):
                             users_by_commute.append(user)
+
+            users_by_relocation_assistance_amount = [] if company.job_requirements.relocate == False else [user for user in users_to_check if user.preferences.relocate == True and user.preferences.relocation_assistance_amount_usd <= company.job_requirements.relocation_assistance_amount_usd]
+
             # users_by_pay
             # users_by_work_task
 
-            users = [*users_by_remote, *users_by_hybrid, *users_by_days_and_hours, *users_by_start_date, *users_by_commute]
+            users = [*users_by_remote, *users_by_hybrid, *users_by_days_and_hours, *users_by_start_date, *users_by_commute, *users_by_relocation_assistance_amount]
 
             for user in set(users):
                 Match.objects.create(hiring_company=company, job_seeker=user)

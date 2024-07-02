@@ -33,7 +33,7 @@ class PreferencesModelTests(TestCase):
             relocate=True,
             maximum_relocation_distance=25,
             distance_measurement='mi',
-            relocation_assistance_amount=Money(5000, 'USD'),
+            _relocation_assistance_amount=Money(5000, 'USD'),
             pay_low=Money(100_000, 'USD'),
             pay_high=Money(150_000, 'USD'),
             start_search_date=date.today() + timedelta(weeks=1),

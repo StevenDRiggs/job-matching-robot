@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from dotenv import dotenv_values
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+OPEN_EXCHANGE_RATES_APP_ID = dotenv_values(f'{BASE_DIR}/.env')['OPEN_EXCHANGE_RATES_APP_ID']
+
 
 # Application definition
 
@@ -35,6 +38,7 @@ INSTALLED_APPS = [
     'hiring_companies.apps.HiringCompaniesConfig',
     'matching.apps.MatchingConfig',
     'djmoney',
+    'djmoney.contrib.exchange',
     'django_json_widget',
     'django.contrib.admin',
     'django.contrib.auth',

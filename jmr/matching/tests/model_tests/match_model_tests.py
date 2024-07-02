@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from django.test import TestCase
+from django.test import tag, TestCase
 from djmoney.money import Money
 
 from hiring_companies.models import (
@@ -81,7 +81,7 @@ class MatchModelTests(TestCase):
             relocate=True,
             maximum_relocation_distance=0,
             distance_measurement='km',
-            relocation_assistance_amount=Money(50_000, 'EUR'),
+            _relocation_assistance_amount=Money(50_000, 'EUR'),
             pay_low=Money(150_000, 'EUR'),
             pay_high=Money(200_000, 'EUR'),
             position_availability_start_date=date.today() + timedelta(weeks=3),
@@ -245,7 +245,7 @@ class MatchModelTests(TestCase):
         preferences = self.user1.preferences
         preferences.distance_measurement = 'km'
         preferences.save()
-        
+
         matches = Match.find_exact(company=self.company1)
         self.assertEqual(matches, [self.user1])
 
@@ -260,3 +260,18 @@ class MatchModelTests(TestCase):
 
         matches = Match.find_exact(company=self.company1)
         self.assertEqual(matches, [self.user1])
+
+    def test_can_match_by_relocation_assistance_amount(self):
+        preferences = self.user1.preferences
+        preferences.relocate = True
+        preferences.save()
+
+        matches = Match.find_exact(company=self.company1)
+        self.assertEqual(matches, [self.user1])
+
+        Match.objects.all().delete()
+
+        preferences._relocation_assistance_amount = Money(125_000, 'USD')
+        preferences.save()
+        matches = Match.find_exact(company=self.company1)
+        self.assertEqual(len(matches), 0)

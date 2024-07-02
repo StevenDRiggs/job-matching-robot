@@ -2,6 +2,8 @@ import json
 
 from datetime import date, timedelta
 from django.db import models
+from djmoney.contrib.exchange.backends import OpenExchangeRatesBackend
+from djmoney.contrib.exchange.models import convert_money
 from djmoney.models.fields import MoneyField
 
 from .career_field import CareerField
@@ -14,6 +16,11 @@ from .work_task import WorkTask
 
 
 class JobRequirements(models.Model):
+    def __init__(self, *args, **kwargs):
+        backend = OpenExchangeRatesBackend()
+        backend.update_rates()
+        super().__init__(*args, **kwargs)
+
     remote = models.BooleanField(default=False)
     hybrid = models.BooleanField(default=False)
     def default_days_and_hours():
@@ -31,7 +38,10 @@ class JobRequirements(models.Model):
     relocate = models.BooleanField(default=False)
     maximum_relocation_distance = models.SmallIntegerField(default=0, null=True, blank=True)
     distance_measurement = models.CharField(max_length=2, choices={'mi': 'mi', 'km': 'km'}, null=True, blank=True)
-    relocation_assistance_amount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', default=0, blank=True)
+    _relocation_assistance_amount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', default=0, blank=True)
+    @property
+    def relocation_assistance_amount_usd(self):
+        return convert_money(self._relocation_assistance_amount, 'USD')
     pay_low = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', null=True, blank=True)
     pay_high = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', null=True, blank=True)
     work_tasks = models.ManyToManyField(WorkTask, related_name='jobs_available')
