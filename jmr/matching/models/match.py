@@ -68,10 +68,13 @@ class Match(models.Model):
 
             users_by_relocation_assistance_amount = [] if company.job_requirements.relocate == False else [user for user in users_to_check if user.preferences.relocate == True and user.preferences.relocation_assistance_amount_usd <= company.job_requirements.relocation_assistance_amount_usd]
 
-            # users_by_pay
+            users_by_pay = users_to_check.filter(
+                Q(preferences__pay_low__isnull=True) | Q(preferences__pay_low__lte=company.job_requirements.pay_high),
+                Q(preferences__pay_high__isnull=True) | Q(preferences__pay_high__gte=company.job_requirements.pay_low),
+            )
             # users_by_work_task
 
-            users = [*users_by_remote, *users_by_hybrid, *users_by_days_and_hours, *users_by_start_date, *users_by_commute, *users_by_relocation_assistance_amount]
+            users = [*users_by_remote, *users_by_hybrid, *users_by_days_and_hours, *users_by_start_date, *users_by_commute, *users_by_relocation_assistance_amount, *users_by_pay]
 
             for user in set(users):
                 Match.objects.create(hiring_company=company, job_seeker=user)

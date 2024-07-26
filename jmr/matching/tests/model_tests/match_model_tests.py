@@ -27,7 +27,10 @@ class MatchModelTests(TestCase):
         cls.user1 = User.objects.create(
             full_name_original='test user 1',
             sort_by=['1', 'user', 'test'],
-            preferences=Preferences.objects.create(),
+            preferences=Preferences.objects.create(
+                pay_low=Money(10_000_000, 'USD'),
+                pay_high=Money(20_000_000, 'USD')
+            ),
         )
         cls.user1.addresses.add(
             Address.objects.create(
@@ -50,7 +53,10 @@ class MatchModelTests(TestCase):
         cls.user2 = User.objects.create(
             full_name_original='test user 2',
             sort_by=['2', 'user', 'test'],
-            preferences=Preferences.objects.create(),
+            preferences=Preferences.objects.create(
+                pay_low=Money(10_000_000, 'USD'),
+                pay_high=Money(20_000_000, 'USD')
+            ),
         )
         cls.user2.addresses.add(
             Address.objects.create(
@@ -229,6 +235,7 @@ class MatchModelTests(TestCase):
         matches = Match.find_exact(company=company1)
         self.assertEqual(matches, [user1])
 
+
     def test_can_match_by_start_date(self):
         user2 = self.user2
 
@@ -237,6 +244,7 @@ class MatchModelTests(TestCase):
 
         matches = Match.find_exact(company=self.company1)
         self.assertEqual(matches, [user2])
+
 
     def test_can_match_by_adjusted_commute(self):
         job_requirements = self.company1.job_requirements
@@ -261,6 +269,7 @@ class MatchModelTests(TestCase):
         matches = Match.find_exact(company=self.company1)
         self.assertEqual(matches, [self.user1])
 
+
     def test_can_match_by_relocation_assistance_amount(self):
         preferences = self.user1.preferences
         preferences.relocate = True
@@ -275,3 +284,19 @@ class MatchModelTests(TestCase):
         preferences.save()
         matches = Match.find_exact(company=self.company1)
         self.assertEqual(len(matches), 0)
+
+
+    @tag('only')
+    def test_can_match_by_pay(self):
+        pref = self.user1.preferences
+        pref.pay_low = Money(85_000, 'USD')
+        pref.pay_high = Money(125_000, 'USD')
+        pref.save()
+
+        jr = self.company1.job_requirements
+        jr.pay_low = Money(110_000, 'EUR')
+        jr.pay_high = Money(200_000, 'EUR')
+        jr.save()
+
+        matches = Match.find_exact(company=self.company1)
+        self.assertEqual(matches, [self.user1])
