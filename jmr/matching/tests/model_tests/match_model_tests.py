@@ -302,7 +302,6 @@ class MatchModelTests(TestCase):
         self.assertEqual(matches, [self.user1])
 
 
-    @tag('only')
     def test_can_match_by_work_tasks(self):
         self.user1.preferences.work_tasks.add(
             WorkTask.objects.first(),
