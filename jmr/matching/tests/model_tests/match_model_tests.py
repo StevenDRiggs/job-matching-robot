@@ -192,6 +192,7 @@ class MatchModelTests(TestCase):
         jr.save()
 
 
+    @tag('only')
     def test_matches_no_users_on_initial_setup(self):
         company1 = self.company1
 
@@ -286,7 +287,6 @@ class MatchModelTests(TestCase):
         self.assertEqual(len(matches), 0)
 
 
-    @tag('only')
     def test_can_match_by_pay(self):
         pref = self.user1.preferences
         pref.pay_low = Money(85_000, 'USD')
@@ -297,6 +297,17 @@ class MatchModelTests(TestCase):
         jr.pay_low = Money(110_000, 'EUR')
         jr.pay_high = Money(200_000, 'EUR')
         jr.save()
+
+        matches = Match.find_exact(company=self.company1)
+        self.assertEqual(matches, [self.user1])
+
+
+    @tag('only')
+    def test_can_match_by_work_tasks(self):
+        self.user1.preferences.work_tasks.add(
+            WorkTask.objects.first(),
+        )
+        self.user1.preferences.save()
 
         matches = Match.find_exact(company=self.company1)
         self.assertEqual(matches, [self.user1])
