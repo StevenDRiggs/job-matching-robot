@@ -23,24 +23,19 @@ class Match(models.Model):
         if company and user:
             return [Match.objects.create(hiring_company=company, job_seeker=user)]
         elif company:
-            users_to_check = User.objects.filter(
-                Q(preferences__start_search_date__lte=date.today()),
-                Q(preferences__end_search_date__isnull=True) | Q(preferences__end_search_date__gte=date.today()),
-            )
+            users_by_remote = User.objects.filter(preferences__remote=company.job_requirements.remote)
 
-            users_by_remote = users_to_check.filter(preferences__remote=company.job_requirements.remote)
+            users_by_hybrid = User.objects.filter(preferences__hybrid=company.job_requirements.hybrid)
 
-            users_by_hybrid = users_to_check.filter(preferences__hybrid=company.job_requirements.hybrid)
+            users_by_days_and_hours = User.objects.filter(preferences__days_and_hours=company.job_requirements.days_and_hours)
 
-            users_by_days_and_hours = users_to_check.filter(preferences__days_and_hours=company.job_requirements.days_and_hours)
-
-            users_by_start_date = users_to_check.filter(
+            users_by_start_date = User.objects.filter(
                 preferences__start_date__gte=company.job_requirements.start_date_earliest,
                 preferences__start_date__lte=company.job_requirements.start_date_latest,
             )
 
             users_by_commute = []
-            for user in users_to_check:
+            for user in User.objects.all():
                 user_gaddrs = [address.gaddr for address in user.addresses.all()]
                 job_location_gaddrs = [job_location.gaddr for job_location in company.job_requirements.job_locations.all()]
                 gmaps_distance_matrix = gmaps_client.distance_matrix(user_gaddrs, job_location_gaddrs)
@@ -66,14 +61,14 @@ class Match(models.Model):
                         if any([distance - min(company.job_requirements.maximum_relocation_distance * 0.000621371, user.preferences.maximum_relocation_distance * 0.000621371) <= company.job_requirements.maximum_commute * 0.000621371 for distance in distances]):
                             users_by_commute.append(user)
 
-            users_by_relocation_assistance_amount = [] if company.job_requirements.relocate == False else [user for user in users_to_check if user.preferences.relocate == True and user.preferences.relocation_assistance_amount_usd <= company.job_requirements.relocation_assistance_amount_usd]
+            users_by_relocation_assistance_amount = [] if company.job_requirements.relocate == False else [user for user in User.objects.all() if user.preferences.relocate == True and user.preferences.relocation_assistance_amount_usd <= company.job_requirements.relocation_assistance_amount_usd]
 
-            users_by_pay = users_to_check.filter(
+            users_by_pay = User.objects.filter(
                 Q(preferences__pay_low__isnull=True) | Q(preferences__pay_low__lte=company.job_requirements.pay_high),
                 Q(preferences__pay_high__isnull=True) | Q(preferences__pay_high__gte=company.job_requirements.pay_low),
             )
 
-            users_by_work_tasks = users_to_check.filter(preferences__work_tasks__in=company.job_requirements.work_tasks.all())
+            users_by_work_tasks = User.objects.filter(preferences__work_tasks__in=company.job_requirements.work_tasks.all())
 
             users = [*users_by_remote, *users_by_hybrid, *users_by_days_and_hours, *users_by_start_date, *users_by_commute, *users_by_relocation_assistance_amount, *users_by_pay, *users_by_work_tasks]
 

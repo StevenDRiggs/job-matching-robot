@@ -2,6 +2,7 @@ import json
 
 from datetime import date, timedelta
 from django.db import models
+from django.utils import timezone
 from djmoney.contrib.exchange.backends import OpenExchangeRatesBackend
 from djmoney.contrib.exchange.models import convert_money
 from djmoney.models.fields import MoneyField
@@ -20,6 +21,8 @@ class JobRequirements(models.Model):
         backend = OpenExchangeRatesBackend()
         backend.update_rates()
         super().__init__(*args, **kwargs)
+
+    post_date = models.DateField(default=timezone.now())
 
     remote = models.BooleanField(default=False)
     hybrid = models.BooleanField(default=False)
@@ -45,9 +48,6 @@ class JobRequirements(models.Model):
     pay_low = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', null=True, blank=True)
     pay_high = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', null=True, blank=True)
     work_tasks = models.ManyToManyField(WorkTask, related_name='jobs_available')
-
-    position_availability_start_date = models.DateField(default=date.today)
-    position_availability_end_date = models.DateField(null=True, blank=True)
 
     job_locations = models.ManyToManyField(JobLocation, related_name='jobs_available')
 

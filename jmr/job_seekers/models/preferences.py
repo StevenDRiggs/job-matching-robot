@@ -43,9 +43,6 @@ class Preferences(models.Model):
     pay_high = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', null=True, blank=True)
     work_tasks = models.ManyToManyField(WorkTask, blank=True)
 
-    start_search_date = models.DateField(default=date.today)
-    end_search_date = models.DateField(null=True, blank=True)
-
     preferred_locations = models.ManyToManyField('hiring_companies.JobLocation', related_name='location_preferred_by', blank=True)
     non_preferred_locations = models.ManyToManyField('hiring_companies.JobLocation', related_name='location_non_preferred_by', blank=True)
 
