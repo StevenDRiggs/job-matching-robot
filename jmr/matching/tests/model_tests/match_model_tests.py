@@ -90,8 +90,6 @@ class MatchModelTests(TestCase):
             _relocation_assistance_amount=Money(50_000, 'EUR'),
             pay_low=Money(150_000, 'EUR'),
             pay_high=Money(200_000, 'EUR'),
-            position_availability_start_date=date.today() + timedelta(weeks=3),
-            position_availability_end_date=date.today() + timedelta(weeks=4),
         )
         jr.work_tasks.add(
             WorkTask.objects.create(

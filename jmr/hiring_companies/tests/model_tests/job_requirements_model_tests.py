@@ -51,8 +51,6 @@ class JobRequirementsModelTests(TestCase):
             _relocation_assistance_amount=Money(5000, 'USD'),
             pay_low=Money(100_000, 'USD'),
             pay_high=Money(125_000, 'USD'),
-            position_availability_start_date=date.today() + timedelta(weeks=1),
-            position_availability_end_date=date.today() + timedelta(weeks=2),
         )
         job_requirements.work_tasks.add(
             WorkTask.objects.create(

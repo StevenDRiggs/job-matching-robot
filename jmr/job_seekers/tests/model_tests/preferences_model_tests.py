@@ -36,8 +36,6 @@ class PreferencesModelTests(TestCase):
             _relocation_assistance_amount=Money(5000, 'USD'),
             pay_low=Money(100_000, 'USD'),
             pay_high=Money(150_000, 'USD'),
-            start_search_date=date.today() + timedelta(weeks=1),
-            end_search_date=date.today() + timedelta(weeks=2),
         )
         preferences.work_tasks.add(
             WorkTask.objects.create(

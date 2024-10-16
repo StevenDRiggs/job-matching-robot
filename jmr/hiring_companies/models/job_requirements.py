@@ -22,7 +22,7 @@ class JobRequirements(models.Model):
         backend.update_rates()
         super().__init__(*args, **kwargs)
 
-    post_date = models.DateField(default=timezone.now())
+    post_date = models.DateField(default=timezone.now)
 
     remote = models.BooleanField(default=False)
     hybrid = models.BooleanField(default=False)
