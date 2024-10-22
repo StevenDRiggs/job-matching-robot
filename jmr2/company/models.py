@@ -6,13 +6,13 @@ class Company(models.Model):
     name = models.CharField()
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.positions.count()} position{'' if self.positions.count() == 1 else 's'})'
 
     class Meta:
         verbose_name_plural = 'companies'
 
 class Position(models.Model):
-    company = models.ForeignKey(Company, models.CASCADE)
+    company = models.ForeignKey(Company, models.CASCADE, related_name='positions')
 
     title = models.CharField()
     description = models.TextField()
@@ -66,11 +66,17 @@ class Benefit(models.Model):
     def stub(self):
         return '-'.join(self.tag.strip().lower().replace(r'[^a-z -]', '').split())
 
+    def __str__(self):
+        return self.tag
+
 class BenefitAvailable(models.Model):
     position = models.ForeignKey(Position, models.CASCADE)
     benefit = models.ForeignKey(Benefit, models.CASCADE)
 
-    available = models.DurationField()
+    available = models.CharField()
+
+    class Meta:
+        verbose_name_plural = 'benefits available'
 
 class Task(models.Model):
     tag = models.CharField()
@@ -89,6 +95,9 @@ class Skill(models.Model):
     @property
     def stub(self):
         return self.tag.strip().lower().replace(r'\s+', '-')
+
+    def __str__(self):
+        return self.tag
 
 class SkillDetail(models.Model):
     position = models.ForeignKey(Position, models.CASCADE)
