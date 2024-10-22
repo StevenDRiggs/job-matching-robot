@@ -1,4 +1,5 @@
 from django.db import models
+from djmoney.models.fields import MoneyField
 
 
 class Company(models.Model):
@@ -15,6 +16,38 @@ class Position(models.Model):
 
     title = models.CharField()
     description = models.TextField()
+    location = models.JSONField(default=dict) # includes address, remote, hybrid
+    relocation_assistance = models.JSONField(default=dict)
+    position_type = models.CharField(
+        max_length=3,
+        choices={
+            'fth': 'Full-time',
+            'pth': 'Part-time',
+            'sal': 'Salary',
+            'con': 'Contract',
+            'c2h': 'Contract-to-hire',
+            'sea': 'Seasonal',
+            'oth': 'Other',
+        }
+    )
+    pay = MoneyField(
+        max_digits=19,
+        decimal_places=2,
+    )
+    pay_timing = models.CharField(
+        max_length = 1,
+        choices = {
+            'h': 'per hour',
+            'w': 'per week',
+            'b': 'every two weeks',
+            'm': 'per month',
+            'q': 'every three months',
+            'y': 'per year',
+        }
+    )
+    hours = models.JSONField(default=dict)
+
+    benefits = models.ManyToManyField('Benefit', through='BenefitAvailable')
 
     tasks = models.ManyToManyField('Task')
 
@@ -25,12 +58,27 @@ class Position(models.Model):
     def __str__(self):
         return f'{self.title} ({self.company})'
 
-class Task(models.Model):
+class Benefit(models.Model):
     tag = models.CharField()
+    description = models.TextField()
 
     @property
     def stub(self):
-        return '-'.join(self.tag.strip().lower().replace(r'[^a-z -]', '').split()[:5])
+        return '-'.join(self.tag.strip().lower().replace(r'[^a-z -]', '').split())
+
+class BenefitAvailable(models.Model):
+    position = models.ForeignKey(Position, models.CASCADE)
+    benefit = models.ForeignKey(Benefit, models.CASCADE)
+
+    available = models.DurationField()
+
+class Task(models.Model):
+    tag = models.CharField()
+    description = models.TextField()
+
+    @property
+    def stub(self):
+        return '-'.join(self.tag.strip().lower().replace(r'[^a-z -]', '').split())
 
     def __str__(self):
         return self.tag
