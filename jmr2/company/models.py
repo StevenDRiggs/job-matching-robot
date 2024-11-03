@@ -73,7 +73,7 @@ class BenefitAvailable(models.Model):
     position = models.ForeignKey(Position, models.CASCADE)
     benefit = models.ForeignKey(Benefit, models.CASCADE)
 
-    available = models.CharField()
+    available = models.CharField()  # use for 'after 30 days', e.g.
 
     class Meta:
         verbose_name_plural = 'benefits available'
@@ -94,7 +94,7 @@ class Skill(models.Model):
 
     @property
     def stub(self):
-        return self.tag.strip().lower().replace(r'\s+', '-')
+        return '-'.join(self.tag.strip().lower().replace(r'[^a-z -]', '').split())
 
     def __str__(self):
         return self.tag
@@ -117,7 +117,7 @@ class Trait(models.Model):
 
     @property
     def stub(self):
-        return self.tag.strip().lower().replace(r'\s+', '-')
+        return '-'.join(self.tag.strip().lower().replace(r'[^a-z -]', '').split())
 
     def __str__(self):
         return self.tag
