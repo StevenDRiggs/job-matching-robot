@@ -34,7 +34,7 @@ class Position(models.Model):
         max_digits=19,
         decimal_places=2,
     )
-    pay_timing = models.CharField(
+    pay_frequency = models.CharField(
         max_length = 1,
         choices = {
             'h': 'per hour',
@@ -43,6 +43,8 @@ class Position(models.Model):
             'm': 'per month',
             'q': 'every three months',
             'y': 'per year',
+            'e': 'per event',
+            'o': 'other (see description)',
         }
     )
     hours = models.JSONField(default=dict)
