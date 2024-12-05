@@ -1,6 +1,9 @@
 from django.urls import path
 
-from .views import CompanyDetailView, CompanyIndexView
+from .views import (
+    CompanyDetailView,
+    CompanyIndexView,
+)
 
 
 app_name = 'company'

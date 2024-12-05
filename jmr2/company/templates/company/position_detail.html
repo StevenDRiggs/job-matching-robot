@@ -1,0 +1,89 @@
+<h2>{{ position.title }}</h2>
+<h3><em>{{ position.company }}</em></h3>
+
+<p>{{ position.description }}</p>
+
+<ul>
+    <strong>Details</strong>
+    <li><em>Location:</em>&nbsp;{{ position.get_location }}</li>
+    <li><em>Relocation Assistance:</em> {{ position.get_relocation_assistance }}</li>
+    <li><em>Position Type:</em> {{ position.get_position_type }}</li>
+    <li><em>Pay:</em> {{ position.pay }} {{ position.get_pay_frequency }}</li>
+    <li><em>Hours:</em> {{ position.get_hours }}</li>
+    <li><em>Benefits:</em>
+        <ul>
+            {% for benefit in position.benefits.all %}
+                <li>{{ benefit }}</li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li><em>Tasks:</em>
+        <ul>
+            {% for task in position.tasks.all %}
+                <li>{{ task }}</li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li><em>Skills:</em>
+        <ul>
+            {% if position.get_required_skills %}
+                <li><strong>Required:</strong>
+                    <ul>
+                        {% for skill, level in position.get_required_skills %}
+                            <li>{{ skill }} Lv. {{ level }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+            {% if position.get_preferred_skills %}
+                <li><strong>Preferred:</strong>
+                    <ul>
+                        {% for skill, level in position.get_preferred_skills %}
+                            <li>{{ skill }} Lv. {{ level }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+            {% if position.get_bonus_skills %}
+                <li><strong>Bonus:</strong>
+                    <ul>
+                        {% for skill, level in position.get_bonus_skills %}
+                            <li>{{ skill }} Lv. {{ level }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+        </ul>
+    </li>
+    <li><em>Traits:</em>
+        <ul>
+            {% if position.get_required_traits %}
+                <li><strong>Required:</strong>
+                    <ul>
+                        {% for trait, level in position.get_required_traits %}
+                            <li>{{ trait }} Lv. {{ level }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+            {% if position.get_preferred_traits %}
+                <li><strong>Preferred:</strong>
+                    <ul>
+                        {% for trait, level in position.get_preferred_traits %}
+                            <li>{{ trait }} Lv. {{ level }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+            {% if position.get_bonus_traits %}
+                <li><strong>Bonus:</strong>
+                    <ul>
+                        {% for trait, level in position.get_bonus_traits %}
+                            <li>{{ trait }} Lv. {{ level }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+        </ul>
+    </li>
+</ul>

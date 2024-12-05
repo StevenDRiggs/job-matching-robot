@@ -1,1 +1,7 @@
 <h1>{{ company.name }}</h1>
+
+<ul>
+    {% for position in company.positions.all %}
+        <li><a href="{% url 'position:position-detail' position.pk %}">{{ position.title }}</a></li>
+    {% endfor %}
+</ul>
