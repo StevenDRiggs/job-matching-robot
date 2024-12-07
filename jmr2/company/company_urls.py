@@ -8,6 +8,6 @@ from .views import (
 
 app_name = 'company'
 urlpatterns = [
-    path('<int:pk>/', CompanyDetailView.as_view(), name='company_detail'),
-    path('', CompanyIndexView.as_view(), name='companies_index'),
+    path('<int:pk>/', CompanyDetailView.as_view(), name='company-detail'),
+    path('', CompanyIndexView.as_view(), name='companies-index'),
 ]

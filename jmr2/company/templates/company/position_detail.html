@@ -13,7 +13,7 @@
     <li><em>Benefits:</em>
         <ul>
             {% for benefit in position.benefits.all %}
-                <li>{{ benefit }}</li>
+                <li><a href="{% url 'benefit:benefit-detail' benefit.pk %}">{{ benefit.tag }}</a></li>
             {% endfor %}
         </ul>
     </li>

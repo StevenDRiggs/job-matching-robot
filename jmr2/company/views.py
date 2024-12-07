@@ -1,6 +1,18 @@
 from django.views import generic
 
-from .models import Company, Position
+from .models import (
+    Benefit,
+    Company,
+    Position,
+)
+
+
+class BenefitIndexView(generic.ListView):
+    model = Benefit
+    context_object_name = 'benefits'
+
+class BenefitDetailView(generic.DetailView):
+    model = Benefit
 
 
 class CompanyIndexView(generic.ListView):
