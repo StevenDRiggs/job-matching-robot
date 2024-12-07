@@ -4,6 +4,7 @@ from .models import (
     Benefit,
     Company,
     Position,
+    Task,
 )
 
 
@@ -29,3 +30,13 @@ class PositionIndexView(generic.ListView):
 
 class PositionDetailView(generic.DetailView):
     model = Position
+
+
+class TaskIndexView(generic.ListView):
+    model = Task
+    context_object_name = 'tasks'
+
+class TaskDetailView(generic.DetailView):
+    model = Task
+
+

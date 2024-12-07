@@ -20,7 +20,7 @@
     <li><em>Tasks:</em>
         <ul>
             {% for task in position.tasks.all %}
-                <li>{{ task }}</li>
+                <li><a href="{% url 'task:task-detail' task.pk %}">{{ task.tag }}</a></li>
             {% endfor %}
         </ul>
     </li>
