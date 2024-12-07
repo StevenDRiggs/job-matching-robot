@@ -141,8 +141,8 @@ class Benefit(models.Model):
         return self.tag
 
 class BenefitAvailable(models.Model):
-    position = models.ForeignKey(Position, models.CASCADE)
-    benefit = models.ForeignKey(Benefit, models.CASCADE)
+    position = models.ForeignKey(Position, models.CASCADE, related_name='benefits_available')
+    benefit = models.ForeignKey(Benefit, models.CASCADE, related_name='benefits_available')
 
     available = models.CharField()  # use for 'after 30 days', e.g.
 

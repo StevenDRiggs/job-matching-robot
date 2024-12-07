@@ -1,3 +1,5 @@
+{% load benefits_available %}
+
 <h2>{{ position.title }}</h2>
 <h3><em>{{ position.company }}</em></h3>
 
@@ -13,7 +15,7 @@
     <li><em>Benefits:</em>
         <ul>
             {% for benefit in position.benefits.all %}
-                <li><a href="{% url 'benefit:benefit-detail' benefit.pk %}">{{ benefit.tag }}</a></li>
+            <li><a href="{% url 'benefit:benefit-detail' benefit.pk %}">{{ benefit.tag }} - {% benefits_availability benefit position %}</a></li>
             {% endfor %}
         </ul>
     </li>
