@@ -1,7 +1,7 @@
 {% if companies %}
     <ul>
         {% for company in companies %}
-            <li><a href="{% url 'company:company_detail' company.id %}">{{ company.name }}</a></li>
+            <li><a href="{% url 'company:company-detail' company.id %}">{{ company.name }}</a></li>
         {% endfor %}
     </ul>
 {% else %}
