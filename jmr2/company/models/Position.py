@@ -1,15 +1,8 @@
 from django.db import models
 from djmoney.models.fields import MoneyField
 
+from .Company import Company
 
-class Company(models.Model):
-    name = models.CharField()
-
-    def __str__(self):
-        return f'{self.name} ({self.positions.count()} position{'' if self.positions.count() == 1 else 's'})'
-
-    class Meta:
-        verbose_name_plural = 'companies'
 
 class Position(models.Model):
     company = models.ForeignKey(Company, models.CASCADE, related_name='positions')
@@ -128,80 +121,3 @@ class Position(models.Model):
 
     def __str__(self):
         return f'{self.title} ({self.company})'
-
-class Benefit(models.Model):
-    tag = models.CharField()
-    description = models.TextField()
-
-    @property
-    def stub(self):
-        return '-'.join(self.tag.strip().lower().replace(r'[^a-z -]', '').split())
-
-    def __str__(self):
-        return self.tag
-
-class BenefitAvailable(models.Model):
-    position = models.ForeignKey(Position, models.CASCADE, related_name='benefits_available')
-    benefit = models.ForeignKey(Benefit, models.CASCADE, related_name='benefits_available')
-
-    available = models.CharField()  # use for 'after 30 days', e.g.
-
-    class Meta:
-        verbose_name_plural = 'benefits available'
-
-class Task(models.Model):
-    tag = models.CharField()
-    description = models.TextField()
-
-    @property
-    def stub(self):
-        return '-'.join(self.tag.strip().lower().replace(r'[^a-z -]', '').split())
-
-    def __str__(self):
-        return self.tag
-
-class Skill(models.Model):
-    tag = models.CharField(max_length=25)
-
-    @property
-    def stub(self):
-        return '-'.join(self.tag.strip().lower().replace(r'[^a-z -]', '').split())
-
-    def __str__(self):
-        return self.tag
-
-class SkillDetail(models.Model):
-    position = models.ForeignKey(Position, models.CASCADE)
-    skill = models.ForeignKey(Skill, models.CASCADE)
-
-    level = models.PositiveSmallIntegerField()
-    requirement_level = models.CharField(
-        choices={
-            'required': 'Required',
-            'preferred': 'Preferred',
-            'bonus': 'Bonus',
-        }
-    )
-
-class Trait(models.Model):
-    tag = models.CharField(max_length=25)
-
-    @property
-    def stub(self):
-        return '-'.join(self.tag.strip().lower().replace(r'[^a-z -]', '').split())
-
-    def __str__(self):
-        return self.tag
-
-class TraitDetail(models.Model):
-    position = models.ForeignKey(Position, models.CASCADE)
-    trait = models.ForeignKey(Trait, models.CASCADE)
-
-    level = models.PositiveSmallIntegerField()
-    requirement_level = models.CharField(
-        choices={
-            'required': 'Required',
-            'preferred': 'Preferred',
-            'bonus': 'Bonus',
-        }
-    )
