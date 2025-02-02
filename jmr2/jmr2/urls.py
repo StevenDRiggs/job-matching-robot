@@ -32,6 +32,6 @@ urlpatterns = [
     path('positions/', include('company.urls.position_urls')),
     path('tasks/', include('company.urls.task_urls')),
     path('login', LoginPageView.as_view(), name='login', context={'form': LoginForm()}),
-    path('signup', SignUpPageView.as_view(), name='signup'),
+    path('signup', SignUpPageView.as_view(), name='signup', context={'form': SignUpForm()}),
     path('admin/', admin.site.urls),
 ]
