@@ -17,21 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from jmr2.forms import (
-    LoginForm,
-    SignUpForm,
-)
-from jmr2.views import (
-    LoginPageView,
-    SignUpPageView,
-)
 
 urlpatterns = [
-    path('benefits/', include('company.urls.benefit_urls')),
-    path('companies/', include('company.urls.company_urls')),
-    path('positions/', include('company.urls.position_urls')),
-    path('tasks/', include('company.urls.task_urls')),
-    path('login', LoginPageView.as_view(), name='login', context={'form': LoginForm()}),
-    path('signup', SignUpPageView.as_view(), name='signup', context={'form': SignUpForm()}),
     path('admin/', admin.site.urls),
 ]
