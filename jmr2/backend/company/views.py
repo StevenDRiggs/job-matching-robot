@@ -46,3 +46,14 @@ def skill_page(req, pk):
     skill = serializers.serialize('json', Skill.objects.filter(pk=pk))
 
     return JsonResponse(skill, safe=False)
+
+
+def tasks_index(req):
+    tasks = serializers.serialize('json', Task.objects.all())
+
+    return JsonResponse(tasks, safe=False)
+
+def task_page(req, pk):
+    task = serializers.serialize('json', Task.objects.filter(pk=pk))
+
+    return JsonResponse(task, safe=False)
