@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 require('@dotenvx/dotenvx').config()
 
 
@@ -11,7 +13,9 @@ export default async function TraitsIndex() {
       <h2>Traits Index</h2>
       <ul>
         {traits.map((trait) => (
-          <li key={trait.pk}>{trait.fields.tag}</li>
+          <Link href="/traits/{trait.tag}">
+            <li key={trait.pk}>{trait.fields.tag}</li>
+          </Link>
         ))}
       </ul>
     </>

@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 require('@dotenvx/dotenvx').config()
 
 
@@ -11,7 +13,9 @@ export default async function PositionsIndex() {
       <h2>Positions Index</h2>
       <ul>
         {positions.map((position) => (
-          <li key={position.pk}>{position.fields.title}</li>
+          <Link href="/positions/{position.pk}">
+            <li key={position.pk}>{position.fields.title}</li>
+          </Link>
         ))}
       </ul>
     </>

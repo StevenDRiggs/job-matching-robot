@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 require('@dotenvx/dotenvx').config()
 
 
@@ -11,7 +13,9 @@ export default async function TasksIndex() {
       <h2>Tasks Index</h2>
       <ul>
         {tasks.map((task) => (
-          <li key={task.pk}>{task.fields.tag}</li>
+          <Link href="/tasks/{task.tag}">
+            <li key={task.pk}>{task.fields.tag}</li>
+          </Link>
         ))}
       </ul>
     </>

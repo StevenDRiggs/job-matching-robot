@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 require('@dotenvx/dotenvx').config()
 
 
@@ -11,7 +13,9 @@ export default async function BenefitsIndex() {
       <h2>Benefits Index</h2>
       <ul>
         {benefits.map((benefit) => (
-          <li key={benefit.pk}>{benefit.fields.name}</li>
+          <Link href="/benefits/{benefit.pk}">
+            <li key={benefit.pk}>{benefit.fields.name}</li>
+          </Link>
         ))}
       </ul>
     </>
