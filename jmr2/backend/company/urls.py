@@ -21,4 +21,5 @@ from .views import *
 
 urlpatterns = [
     path('', companies_index),
+    path('<int:pk>/', company_page),
 ]
