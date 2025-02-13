@@ -16,9 +16,13 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import *
+from company.views import (
+    companies_index,
+    company_page,
+)
 
 
+app_name = 'companies'
 urlpatterns = [
     path('', companies_index),
     path('<int:pk>/', company_page),
