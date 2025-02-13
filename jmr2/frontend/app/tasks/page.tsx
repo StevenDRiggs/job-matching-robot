@@ -13,8 +13,8 @@ export default async function TasksIndex() {
       <h2>Tasks Index</h2>
       <ul>
         {tasks.map((task) => (
-          <Link href="/tasks/{task.tag}">
-            <li key={task.pk}>{task.fields.tag}</li>
+          <Link href={`/tasks/${task.pk}`} key={task.pk}>
+            <li>{task.fields.tag}</li>
           </Link>
         ))}
       </ul>

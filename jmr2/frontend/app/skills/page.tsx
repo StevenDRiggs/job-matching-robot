@@ -13,8 +13,8 @@ export default async function SkillsIndex() {
       <h2>Skills Index</h2>
       <ul>
         {skills.map((skill) => (
-          <Link href="/skills/{skill.tag}">
-            <li key={skill.pk}>{skill.fields.tag}</li>
+          <Link href={`/skills/${skill.pk}`} key={skill.pk}>
+            <li>{skill.fields.tag}</li>
           </Link>
         ))}
       </ul>

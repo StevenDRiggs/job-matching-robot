@@ -13,8 +13,8 @@ export default async function TraitsIndex() {
       <h2>Traits Index</h2>
       <ul>
         {traits.map((trait) => (
-          <Link href="/traits/{trait.tag}">
-            <li key={trait.pk}>{trait.fields.tag}</li>
+          <Link href={`/traits/${trait.pk}`} key={trait.pk}>
+            <li>{trait.fields.tag}</li>
           </Link>
         ))}
       </ul>
