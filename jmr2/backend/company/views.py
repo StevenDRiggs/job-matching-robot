@@ -35,3 +35,14 @@ def position_page(req, pk):
     position = serializers.serialize('json', Position.objects.filter(pk=pk))
 
     return JsonResponse(position, safe=False)
+
+
+def skills_index(req):
+    skills = serializers.serialize('json', Skill.objects.all())
+
+    return JsonResponse(skills, safe=False)
+
+def skill_page(req, pk):
+    skill = serializers.serialize('json', Skill.objects.filter(pk=pk))
+
+    return JsonResponse(skill, safe=False)
