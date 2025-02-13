@@ -24,3 +24,14 @@ def company_page(req, pk):
     company = serializers.serialize('json', Company.objects.filter(pk=pk))
 
     return JsonResponse(company, safe=False)
+
+
+def positions_index(req):
+    positions = serializers.serialize('json', Position.objects.all())
+
+    return JsonResponse(positions, safe=False)
+
+def position_page(req, pk):
+    position = serializers.serialize('json', Position.objects.filter(pk=pk))
+
+    return JsonResponse(position, safe=False)
