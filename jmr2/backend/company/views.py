@@ -57,3 +57,14 @@ def task_page(req, pk):
     task = serializers.serialize('json', Task.objects.filter(pk=pk))
 
     return JsonResponse(task, safe=False)
+
+
+def traits_index(req):
+    traits = serializers.serialize('json', Trait.objects.all())
+
+    return JsonResponse(traits, safe=False)
+
+def trait_page(req, pk):
+    trait = serializers.serialize('json', Trait.objects.filter(pk=pk))
+
+    return JsonResponse(trait, safe=False)
