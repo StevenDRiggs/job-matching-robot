@@ -1,4 +1,5 @@
-from django.core import serializers
+import json
+
 from django.http import JsonResponse
 
 from .models import *
@@ -21,9 +22,14 @@ def companies_index(req):
     return JsonResponse(companies, safe=False)
 
 def company_page(req, pk):
-    company = serializers.serialize('json', Company.objects.filter(pk=pk))
+    company = Company.objects.get(pk=pk)
+    company_json = json.dumps({
+        'pk': pk,
+        'name' : company.name,
+        'positions': [{'pk': p.pk, 'title': p.title} for p in company.positions.all()],
+    })
 
-    return JsonResponse(company, safe=False)
+    return JsonResponse(company_json, safe=False)
 
 
 def positions_index(req):

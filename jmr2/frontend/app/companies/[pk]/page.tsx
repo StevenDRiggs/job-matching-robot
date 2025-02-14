@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 require('@dotenvx/dotenvx').config()
 
 
@@ -10,11 +12,18 @@ export default async function Company({
   const company = await fetch(`${process.env.BACKEND}/companies/${pk}`)
   .then((data) => data.json())
   .then((json) => JSON.parse(json))
-  .then((company_as_arr) => company_as_arr[0])
 
   return (
     <>
-      <h3>{company.fields.name}</h3>
+      <h3>{company.name}</h3>
+      <h4>Positions:</h4>
+      <ul>
+        {company.positions.map(({ pk, title }) => (
+          <li key={pk}>
+            <Link href={`/positions/${pk}`}>{title}</Link>
+          </li>
+        ))}
+      </ul>
     </>
   )
 }
