@@ -56,6 +56,12 @@ class Position(models.Model):
         max_digits=19,
         decimal_places=2,
     )
+    def get_pay(self):
+        return {
+            'amount': float(self.pay.amount),
+            'currency': str(self.pay.currency)
+        }
+
     pay_frequency_dict = {
         'h': 'per hour',
         'w': 'per week',

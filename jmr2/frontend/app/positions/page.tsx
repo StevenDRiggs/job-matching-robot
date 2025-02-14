@@ -14,7 +14,7 @@ export default async function PositionsIndex() {
       <ul>
         {positions.map((position) => (
           <Link href={`/positions/${position.pk}`} key={position.pk}>
-            <li>{position.fields.title}</li>
+            <li>{position.title}</li>
           </Link>
         ))}
       </ul>

@@ -14,7 +14,7 @@ export default async function CompaniesIndex() {
       <ul>
         {companies.map((company) => (
           <Link href={`/companies/${company.pk}`} key={company.pk}>
-            <li>{company.fields.name}</li>
+            <li>{company.name}</li>
           </Link>
         ))}
       </ul>

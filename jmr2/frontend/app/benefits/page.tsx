@@ -14,7 +14,7 @@ export default async function BenefitsIndex() {
       <ul>
         {benefits.map((benefit) => (
           <Link href={`/benefits/${benefit.pk}`} key={benefit.pk}>
-            <li>{benefit.fields.tag}</li>
+            <li>{benefit.tag}</li>
           </Link>
         ))}
       </ul>
