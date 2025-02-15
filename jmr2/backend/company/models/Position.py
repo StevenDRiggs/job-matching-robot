@@ -105,6 +105,16 @@ class Position(models.Model):
         return output
 
     benefits = models.ManyToManyField('Benefit', through='BenefitAvailable')
+    def get_benefits(self):
+        output = []
+        for benefit in self.benefits.all():
+            output.append({
+                'pk': benefit.pk,
+                'tag': benefit.tag,
+                'available': self.benefits_available.get(benefit=benefit).available,
+            })
+
+        return output
 
     tasks = models.ManyToManyField('Task')
 

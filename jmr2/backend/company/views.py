@@ -55,7 +55,7 @@ def position_page(req, pk):
         'pay': position.get_pay(),
         'pay_frequency': position.get_pay_frequency(),
         'hours': position.get_hours(),
-        'benefits': [{'pk': b.pk, 'tag': b.tag, 'description': b.description} for b in position.benefits.all()],
+        'benefits': position.get_benefits(),
         'tasks': [{'pk': t.pk, 'tag': t.tag} for t in position.tasks.all()],
         'skills': {
             'required': position.get_required_skills(),

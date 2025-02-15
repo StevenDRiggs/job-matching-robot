@@ -1,5 +1,7 @@
 require('@dotenvx/dotenvx').config()
 
+import Link from 'next/link'
+
 
 export default async function Position({
   params,
@@ -49,17 +51,16 @@ export default async function Position({
             <td>
               <table>
                 <tbody>
-
+                  {position.benefits.map(({ pk, tag, available }) => (
+                    <tr key={pk}>
+                      <td><Link href={`/benefits/${pk}`}>{tag}</Link></td>
+                      <td><em>{available}</em></td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </td>
           </tr>
-          {Object.keys(position).map((field) => (
-            <tr key={field}>
-              <td>{field}</td>
-              <td>{JSON.stringify(position[field])}</td>
-            </tr>
-          ))}
         </tbody>
       </table>
     </>
