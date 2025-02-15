@@ -61,6 +61,85 @@ export default async function Position({
               </table>
             </td>
           </tr>
+          <tr>
+            <td><strong>Tasks</strong></td>
+            <td>
+              <ul>
+                {position.tasks.map(({ pk, tag }) => (
+                  <li key={pk}><Link href={`/tasks/${pk}`}>{tag}</Link></li>
+                ))}
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Skills</strong></td>
+            <td>
+              <table>
+                <tbody>
+                  <tr>
+                    <td><em>Required</em></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <table>
+                        <tbody>
+                          {position.skills.required.map(({ pk, tag, level }) => (
+                            <tr key={pk}>
+                              <td>{tag}</td>
+                              <td> level </td>
+                              <td>{level}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><em>Preferred</em></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <table>
+                        <tbody>
+                          {position.skills.preferred.map(({ pk, tag, level }) => (
+                            <tr key={pk}>
+                              <td>{tag}</td>
+                              <td> level </td>
+                              <td>{level}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><em>Bonus</em></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <table>
+                        <tbody>
+                          {position.skills.bonus.map(({ pk, tag, level }) => (
+                            <tr key={pk}>
+                              <td>{tag}</td>
+                              <td> level </td>
+                              <td>{level}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
         </tbody>
       </table>
     </>

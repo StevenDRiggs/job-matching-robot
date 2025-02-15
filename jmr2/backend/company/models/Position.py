@@ -119,12 +119,25 @@ class Position(models.Model):
     tasks = models.ManyToManyField('Task')
 
     skills = models.ManyToManyField('Skill', through='SkillDetail')
+    def get_skills(self, requirement_level):
+        output = []
+        for skill in self.skills.filter(skilldetail__requirement_level=requirement_level):
+            output.append({
+                'pk': skill.pk,
+                'tag': skill.tag,
+                'level': self.skilldetail_set.get(skill=skill).level,
+            })
+
+        return output
+
     def get_required_skills(self):
-        return [(skill, skill.skilldetail_set.filter(position=self).first().level) for skill in self.skills.filter(skilldetail__requirement_level='required')]
+        return self.get_skills('required')
+
     def get_preferred_skills(self):
-        return [(skill, skill.skilldetail_set.filter(position=self).first().level) for skill in self.skills.filter(skilldetail__requirement_level='preferred')]
+        return self.get_skills('preferred')
+
     def get_bonus_skills(self):
-        return [(skill, skill.skilldetail_set.filter(position=self).first().level) for skill in self.skills.filter(skilldetail__requirement_level='bonus')]
+        return self.get_skills('bonus')
 
     traits = models.ManyToManyField('Trait', through='TraitDetail')
     def get_required_traits(self):
