@@ -13,6 +13,37 @@ export default async function Position({
   .then((data) => data.json())
   .then((json) => JSON.parse(json))
 
+  const subrender = (classType: String, requirementLevel: String) => {
+    if (position[classType][requirementLevel].length <= 0) {
+      return ''
+    } else {
+      return (
+        <>
+          <tr>
+            <td><em>{requirementLevel.charAt(0).toUpperCase() + requirementLevel.substring(1).toLowerCase()}</em></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <table>
+                <tbody>
+                  {position[classType][requirementLevel].map(({ pk, tag, level }) => (
+                    <tr key={pk}>
+                      <td><Link href={`/${classType}/${pk}`}>{tag}</Link></td>
+                      <td> level </td>
+                      <td>{level}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </>
+      )
+    }
+  }
+
   return (
     <>
       <h3>{position.title}</h3>
@@ -76,66 +107,21 @@ export default async function Position({
             <td>
               <table>
                 <tbody>
-                  <tr>
-                    <td><em>Required</em></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>
-                      <table>
-                        <tbody>
-                          {position.skills.required.map(({ pk, tag, level }) => (
-                            <tr key={pk}>
-                              <td>{tag}</td>
-                              <td> level </td>
-                              <td>{level}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><em>Preferred</em></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>
-                      <table>
-                        <tbody>
-                          {position.skills.preferred.map(({ pk, tag, level }) => (
-                            <tr key={pk}>
-                              <td>{tag}</td>
-                              <td> level </td>
-                              <td>{level}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><em>Bonus</em></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>
-                      <table>
-                        <tbody>
-                          {position.skills.bonus.map(({ pk, tag, level }) => (
-                            <tr key={pk}>
-                              <td>{tag}</td>
-                              <td> level </td>
-                              <td>{level}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
+                  {subrender('skills', 'required')}
+                  {subrender('skills', 'preferred')}
+                  {subrender('skills', 'bonus')}
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Traits</strong></td>
+            <td>
+              <table>
+                <tbody>
+                  {subrender('traits', 'required')}
+                  {subrender('traits', 'preferred')}
+                  {subrender('traits', 'bonus')}
                 </tbody>
               </table>
             </td>

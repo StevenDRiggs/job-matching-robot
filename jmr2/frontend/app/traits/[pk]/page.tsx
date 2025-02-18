@@ -10,11 +10,10 @@ export default async function Trait({
   const trait = await fetch(`${process.env.BACKEND}/traits/${pk}`)
   .then((data) => data.json())
   .then((json) => JSON.parse(json))
-  .then((trait_as_arr) => trait_as_arr[0])
 
   return (
     <>
-      <h3>{trait.fields.tag}</h3>
+      <h3>{trait.tag}</h3>
     </>
   )
 }
