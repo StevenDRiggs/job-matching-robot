@@ -1,17 +1,11 @@
 import Link from 'next/link'
 
 
-export default function Login() {
+export default function ChooseLogin() {
   return (
-    <>
-      <form action="" method="POST">
-        <label for="usernameoremail">Username or Email</label>
-        <input type="text"name="usernameoremail" />
-        <label for="password">Password</label>
-        <input type="password" name="password" />
-        <input type="submit" />
-      </form>
-      <p>New User? Sign Up <Link href="/signup">here</Link></p>
-    </>
+    <div>
+      <p><Link href="/login/company">Company User</Link></p>
+      <p><Link href="/login/jobseeker">Job Seeker</Link></p>
+    </div>
   )
 }
