@@ -2,9 +2,6 @@ import re
 
 from sqlalchemy import (
     ForeignKey,
-    Integer,
-    List,
-    String,
     Text,
 )
 from sqlalchemy.orm import (
@@ -12,6 +9,7 @@ from sqlalchemy.orm import (
     mapped_column,
     relationship,
 )
+from typing import List
 
 from .Base import Base
 from .benefits_available import benefits_available
@@ -20,11 +18,11 @@ from .benefits_available import benefits_available
 class Benefit(Base):
     __tablename__ = 'benefits'
 
-    id: Mapped[Integer] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    _tag: Mapped[String] = mapped_column(nullable=False)
+    _tag: Mapped[str] = mapped_column(nullable=False)
     @property
-    def tag(self) -> String:
+    def tag(self) -> str:
         return self._tag
     @tag.setter
     def tag(self, phrase: str) -> None:
@@ -46,7 +44,7 @@ class Benefit(Base):
 
         self._tag = new_tag
 
-    description: Mapped[Text] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(Text, nullable=False)
 
     positions: Mapped[List['Position']] = relationship(
         secondary=benefits_available,

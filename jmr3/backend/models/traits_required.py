@@ -6,7 +6,7 @@ from sqlalchemy import (
     Table,
 )
 
-from .Base import Base
+from .Base import metadata
 
 
 '''
@@ -20,9 +20,9 @@ requirement_level_dict = {
 
 traits_required = Table(
     'traits_required',
-    Base.metadata,
-    Column('trait', ForeignKey('Trait.id'), primary_key=True),
-    Column('position', ForeignKey('Position.id'), primary_key=True),
+    metadata,
+    Column('trait_id', ForeignKey('traits.id'), primary_key=True),
+    Column('position_id', ForeignKey('positions.id'), primary_key=True),
     Column('level', Integer, nullable=False),
     Column('requirement_level', String(1), nullable=False),
 )

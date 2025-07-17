@@ -3,7 +3,6 @@ import re
 from sqlalchemy import (
     ForeignKey,
     Integer,
-    List,
     String,
     Text,
 )
@@ -12,6 +11,7 @@ from sqlalchemy.orm import (
     mapped_column,
     relationship,
 )
+from typing import List
 
 from .Base import Base
 from .tasks_required import tasks_required
@@ -20,9 +20,9 @@ from .tasks_required import tasks_required
 class Task(Base):
     __tablename__ = 'tasks'
 
-    id: Mapped[Integer] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    _name: Mapped[String] = mapped_column(nullable=False)
+    _name: Mapped[int] = mapped_column(nullable=False)
     @property
     def name(self):
         return self._name
@@ -48,9 +48,9 @@ class Task(Base):
 
         self._tag = new_tag
 
-    description: Mapped[Text] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(Text, nullable=False)
 
-    _tag: Mapped[String] = mapped_column(nullable=False)
+    _tag: Mapped[str] = mapped_column(nullable=False)
     @property
     def tag(self) -> String:
         return self._tag

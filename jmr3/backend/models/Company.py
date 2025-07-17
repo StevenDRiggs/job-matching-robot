@@ -1,11 +1,10 @@
 from sqlalchemy import (
-    List,
-    String,
     Uuid,
 )
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
+    relationship,
 )
 from typing import List
 
@@ -17,8 +16,8 @@ class Company(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    name: Mapped[String] = mapped_column(nullable=False)
-    uuid: Mapped[Uuid] = mapped_column(nullable=False)
+    name: Mapped[str] = mapped_column(nullable=False)
+    uuid: Mapped[str] = mapped_column(Uuid, nullable=False)
 
     positions: Mapped[List['Position']] = relationship(
         back_populates='company',

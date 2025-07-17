@@ -7,14 +7,21 @@ from sqlalchemy import (
     JSON,
     Numeric,
     String,
+    Text,
 )
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
+    relationship,
 )
+from typing import List
 
 from .Base import Base
 from .benefits_available import benefits_available
+from .Company import Company
+from .skills_required import skills_required
+from .tasks_required import tasks_required
+from .traits_required import traits_required
 
 
 position_type_dict = {
@@ -47,15 +54,15 @@ pay_frequency_dict = {
 class Position(Base):
     __tablename__ = 'positions'
 
-    id: Mapped[Integer] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    company_id: Mapped['Company'] = mapped_column(ForeignKey('companies.id'))
-    company: Mapped['Company'] = relationship(back_populates='positions')
+    company_id: Mapped[Company] = mapped_column(ForeignKey('companies.id'))
+    company: Mapped[Company] = relationship(back_populates='positions')
 
-    title: Mapped[String] = mapped_column(nullable=False)
-    description: Mapped[Text] = mapped_column(nullable=False)
+    title: Mapped[str] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(Text, nullable=False)
 
-    _location: Mapped[JSON] = mapped_column(nullable=False, default=dict)
+    _location: Mapped[str] = mapped_column(JSON, nullable=False, default=dict)
     @property
     def location(self) -> str:
         loc = json.loads(self._location)
@@ -64,7 +71,7 @@ class Position(Base):
         address = loc.get('address')
         return '; '.join([v for v in (remote, hybrid, address) if v is not None])
 
-    _relocation_assistance: Mapped[JSON] = mapped_column(nullable=False, default=dict)
+    _relocation_assistance: Mapped[str] = mapped_column(JSON, nullable=False, default=dict)
     @property
     def relocation_assistance(self) -> str:
         ra = json.loads(self._relocation_assistance)
@@ -79,7 +86,7 @@ class Position(Base):
     def position_type(self) -> str:
         return position_type_dict[self._position_type]
 
-    pay_amount: Mapped[Numeric] = mapped_column(nullable=False)
+    pay_amount: Mapped[float] = mapped_column(nullable=False)
     pay_currency: Mapped[String] = mapped_column(String(3), nullable=False)
     @property
     def pay(self) -> str:
@@ -90,15 +97,15 @@ class Position(Base):
     def pay_frequency(self) -> str:
         return pay_frequency_dict[self._pay_frequency]
 
-    hours: Mapped[JSON] = mapped_column(nullable=False, default=json.dumps({
+    hours: Mapped[str] = mapped_column(JSON, nullable=False, default=json.dumps({
         'flex': False,
         'weekly_total': 40,
         'core': {
-            'MON': (time(hour=9), time(hour=17)),
-            'TUE': (time(hour=9), time(hour=17)),
-            'WED': (time(hour=9), time(hour=17)),
-            'THU': (time(hour=9), time(hour=17)),
-            'FRI': (time(hour=9), time(hour=17)),
+            'MON': (time(hour=9).isoformat(), time(hour=17).isoformat()),
+            'TUE': (time(hour=9).isoformat(), time(hour=17).isoformat()),
+            'WED': (time(hour=9).isoformat(), time(hour=17).isoformat()),
+            'THU': (time(hour=9).isoformat(), time(hour=17).isoformat()),
+            'FRI': (time(hour=9).isoformat(), time(hour=17).isoformat()),
         },
     }))
 

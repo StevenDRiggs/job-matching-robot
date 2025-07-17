@@ -5,13 +5,13 @@ from sqlalchemy import (
     Table,
 )
 
-from .Base import Base
+from .Base import metadata
 
 
 benefits_available = Table(
     'benefits_available',
-    Base.metadata,
-    Column('benefit', ForeignKey('Benefit.id'), primary_key=True),
-    Column('position', ForeignKey('Position.id'), primary_key=True),
+    metadata,
+    Column('benefit_id', ForeignKey('benefits.id'), primary_key=True),
+    Column('position_id', ForeignKey('positions.id'), primary_key=True),
 )
 
