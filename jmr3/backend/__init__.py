@@ -5,6 +5,6 @@ from .models import *
 
 
 app = Flask(__name__)
-db = create_engine('sqlite://', echo=True)
+engine = create_engine('sqlite://', echo=True)
 
-Base.metadata.create_all(db)
+Base.metadata.create_all(engine)
