@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 
-from ..models import *
+from backend.models import *
 
 
 class TestInit:
